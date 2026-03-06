@@ -1,0 +1,448 @@
+/* Letterboxd Alternative Sources — Options Page
+   Dark theme matching Letterboxd's aesthetic. */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #14181c;
+  color: #9ab;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+/* ------------------------------------------------------------------ Header */
+
+.page-header {
+  margin-bottom: 40px;
+  border-bottom: 1px solid #2c3440;
+  padding-bottom: 20px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px;
+}
+
+.page-subtitle {
+  margin: 0;
+  color: #678;
+  font-size: 13px;
+}
+
+/* --------------------------------------------------------------- Sections */
+
+section {
+  margin-bottom: 40px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #cde;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* -------------------------------------------------------------- Source list */
+
+.source-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.source-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #1e2530;
+  border: 1px solid #2c3440;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.source-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.source-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.source-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.source-name {
+  font-weight: 600;
+  color: #cde;
+  font-size: 14px;
+}
+
+.source-url {
+  font-size: 11px;
+  color: #567;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 380px;
+}
+
+.source-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.badge {
+  background: #243040;
+  color: #7ab;
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.source-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.empty-message {
+  color: #567;
+  font-size: 13px;
+  text-align: center;
+  padding: 32px 0;
+  margin: 0;
+  border: 1px dashed #2c3440;
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------- Wizard */
+
+.wizard {
+  background: #1a2030;
+  border: 1px solid #2c3440;
+  border-radius: 8px;
+  padding: 28px;
+}
+
+.wizard .section-title {
+  margin-bottom: 24px;
+}
+
+/* ----------------------------------------------------------------- Forms */
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8ab;
+}
+
+.field input[type="text"],
+.field input[type="url"] {
+  display: block;
+  width: 100%;
+  background: #141820;
+  border: 1px solid #2c3440;
+  border-radius: 5px;
+  color: #cde;
+  font-size: 14px;
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.field input:focus {
+  border-color: #40bcf4;
+}
+
+.field input::placeholder {
+  color: #445;
+}
+
+.hint {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: #567;
+  margin-top: 2px;
+}
+
+.hint code {
+  color: #7ab;
+  background: #1c2638;
+  border-radius: 3px;
+  padding: 0 3px;
+}
+
+.required { color: #f06; }
+.optional { color: #567; font-weight: 400; }
+
+/* --------------------------------------------------------------- Toggles */
+
+.options-group {
+  border: 1px solid #2c3440;
+  border-radius: 6px;
+  padding: 4px 14px 10px;
+  margin: 0 0 20px;
+}
+
+.options-group legend {
+  color: #678;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 0 6px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #1e2530;
+}
+
+.toggle-row:last-child {
+  border-bottom: none;
+}
+
+.toggle-label {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9ab;
+}
+
+.toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  background: #2c3440;
+  border-radius: 20px;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: #678;
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.toggle-input:checked + .toggle-switch {
+  background: #1a5a8a;
+}
+
+.toggle-input:checked + .toggle-switch::after {
+  transform: translateX(16px);
+  background: #40bcf4;
+}
+
+/* --------------------------------------------------------------- Preview */
+
+.preview-box {
+  background: #12161c;
+  border: 1px solid #2c3440;
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+}
+
+.preview-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #567;
+  margin: 0 0 10px;
+}
+
+.preview-film-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.preview-film-label {
+  font-size: 12px;
+  color: #678;
+  white-space: nowrap;
+}
+
+.preview-title-input {
+  flex: 1;
+  background: #1a2030;
+  border: 1px solid #2c3440;
+  border-radius: 4px;
+  color: #cde;
+  font-size: 12px;
+  padding: 4px 8px;
+  outline: none;
+}
+
+.preview-year-input {
+  width: 56px;
+  background: #1a2030;
+  border: 1px solid #2c3440;
+  border-radius: 4px;
+  color: #cde;
+  font-size: 12px;
+  padding: 4px 8px;
+  outline: none;
+}
+
+.preview-title-input:focus,
+.preview-year-input:focus {
+  border-color: #40bcf4;
+}
+
+.preview-url {
+  display: block;
+  font-size: 12px;
+  color: #40bcf4;
+  word-break: break-all;
+  text-decoration: none;
+}
+
+.preview-url:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------- Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, color 0.15s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: #1a5a8a;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #1e6fa8;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #7ab;
+  border: 1px solid #2c3440;
+}
+
+.btn-ghost:hover {
+  background: #1e2530;
+  color: #cde;
+}
+
+.btn-danger {
+  background: transparent;
+  color: #c44;
+  border: 1px solid #4a2020;
+}
+
+.btn-danger:hover {
+  background: #3a1818;
+  color: #e66;
+}
+
+.btn-small {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.wizard-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* --------------------------------------------------------------- Errors */
+
+.form-error {
+  color: #e55;
+  font-size: 12px;
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  background: #2a1010;
+  border-radius: 4px;
+  border: 1px solid #4a2020;
+}

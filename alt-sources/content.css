@@ -1,0 +1,26 @@
+/* Letterboxd Alternative Sources — injected styles
+   The section uses Letterboxd's own .justwatch-strip / .service classes so
+   most styling is inherited. We only need to handle the text-only case. */
+
+/* "No sources" message */
+.las-empty {
+  font-size: 12px;
+  color: #678;
+  margin: 0;
+  padding: 4px 0;
+}
+
+.las-empty a {
+  color: #99aabb;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Inline "Where to watch" panel.
+   Alt rows are injected straight into Letterboxd's own .services list and reuse
+   its .service/.label/.brand/.options classes, so the icon + name + pill layout
+   is inherited from the site's own styles — no extra wrapper styling needed.
+   The empty-state prompt (no sources configured) gets a little breathing room. */
+.las-empty.las-inline-service {
+  padding: 4px 0 10px;
+}

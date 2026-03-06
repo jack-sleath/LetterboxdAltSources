@@ -1,0 +1,52 @@
+{
+  "sources": [
+    {
+      "addYear": false,
+      "baseUrl": "https://www.justwatch.com/uk/search?q=",
+      "encodeUrlParams": true,
+      "extraText": "",
+      "iconUrl": "https://www.justwatch.com/favicon.ico",
+      "id": "example-justwatch",
+      "name": "JustWatch",
+      "punctuationToSpaces": false,
+      "removePunctuation": false,
+      "spacesToPlus": false
+    },
+    {
+      "addYear": true,
+      "baseUrl": "https://www.youtube.com/results?search_query=",
+      "encodeUrlParams": false,
+      "extraText": "full movie",
+      "iconUrl": "https://www.youtube.com/favicon.ico",
+      "id": "default-youtube",
+      "name": "YouTube",
+      "punctuationToSpaces": false,
+      "removePunctuation": false,
+      "spacesToPlus": true
+    },
+    {
+      "addYear": false,
+      "baseUrl": "https://archive.org/search?query=",
+      "encodeUrlParams": true,
+      "extraText": "",
+      "iconUrl": "https://archive.org/favicon.ico",
+      "id": "example-archive-org",
+      "name": "Internet Archive",
+      "punctuationToSpaces": false,
+      "removePunctuation": false,
+      "spacesToPlus": false
+    },
+    {
+      "addYear": true,
+      "baseUrl": "https://www.google.com/search?q=",
+      "encodeUrlParams": true,
+      "extraText": "where to watch",
+      "iconUrl": "https://www.google.com/favicon.ico",
+      "id": "example-google",
+      "name": "Google",
+      "punctuationToSpaces": false,
+      "removePunctuation": false,
+      "spacesToPlus": true
+    }
+  ]
+}
