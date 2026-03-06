@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Letterboxd Alternative Sources — Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <h1 class="page-title">Alternative Sources</h1>
+      <p class="page-subtitle">Configure sources that appear on Letterboxd film pages.</p>
+    </header>
+
+    <!-- Source list -->
+    <section id="sources-section">
+      <div class="section-header">
+        <h2 class="section-title">Your Sources</h2>
+        <div class="section-header-actions">
+          <button id="btn-import" class="btn btn-ghost" title="Import sources from a JSON file">Import</button>
+          <button id="btn-export" class="btn btn-ghost" title="Export sources to a JSON file">Export</button>
+          <button id="btn-add" class="btn btn-primary">+ Add Source</button>
+        </div>
+      </div>
+      <input type="file" id="import-file-input" accept=".json,application/json" hidden />
+      <ul id="source-list" class="source-list"></ul>
+      <p id="empty-message" class="empty-message" hidden>
+        No sources yet. Add one above to get started.
+      </p>
+    </section>
+
+    <!-- Add / Edit wizard -->
+    <section id="wizard-section" class="wizard" hidden>
+      <h2 id="wizard-title" class="section-title">Add Source</h2>
+
+      <form id="wizard-form" autocomplete="off" novalidate>
+        <input type="hidden" id="edit-id" value="" />
+
+        <div class="field">
+          <label for="field-name">Display Name <span class="required">*</span></label>
+          <input type="text" id="field-name" placeholder="e.g. JustWatch" required />
+        </div>
+
+        <div class="field">
+          <label for="field-base-url">
+            Base Search URL <span class="required">*</span>
+            <span class="hint">Include everything up to (and including) the query parameter, e.g.
+              <code>https://www.justwatch.com/us/search?q=</code></span>
+          </label>
+          <input type="url" id="field-base-url"
+            placeholder="https://example.com/search?q=" required />
+        </div>
+
+        <div class="field">
+          <label for="field-icon-url">
+            Icon URL <span class="optional">(optional)</span>
+          </label>
+          <input type="url" id="field-icon-url"
+            placeholder="https://example.com/favicon.ico" />
+        </div>
+
+        <fieldset class="options-group">
+          <legend>Query Options</legend>
+
+          <label class="toggle-row">
+            <span class="toggle-label">
+              Encode URL params
+              <span class="hint">Applies <code>encodeURIComponent</code> to the search query.</span>
+            </span>
+            <input type="checkbox" id="opt-encode" class="toggle-input" />
+            <span class="toggle-switch" aria-hidden="true"></span>
+          </label>
+
+          <label class="toggle-row">
+            <span class="toggle-label">
+              Replace spaces with +
+              <span class="hint">Replaces spaces with <code>+</code> (common for form-style URLs).</span>
+            </span>
+            <input type="checkbox" id="opt-spaces-to-plus" class="toggle-input" />
+            <span class="toggle-switch" aria-hidden="true"></span>
+          </label>
+
+          <label class="toggle-row">
+            <span class="toggle-label">
+              Append year
+              <span class="hint">Adds the film's release year to the search query.</span>
+            </span>
+            <input type="checkbox" id="opt-add-year" class="toggle-input" />
+            <span class="toggle-switch" aria-hidden="true"></span>
+          </label>
+
+          <label class="toggle-row">
+            <span class="toggle-label">
+              Remove punctuation
+              <span class="hint">Strips punctuation from the title (e.g. <code>Hail, Caesar!</code> → <code>Hail Caesar</code>).</span>
+            </span>
+            <input type="checkbox" id="opt-remove-punct" class="toggle-input" />
+            <span class="toggle-switch" aria-hidden="true"></span>
+          </label>
+
+          <label class="toggle-row">
+            <span class="toggle-label">
+              Punctuation to spaces
+              <span class="hint">Replaces punctuation with spaces (e.g. <code>M*A*S*H</code> → <code>M A S H</code>).</span>
+            </span>
+            <input type="checkbox" id="opt-punct-to-spaces" class="toggle-input" />
+            <span class="toggle-switch" aria-hidden="true"></span>
+          </label>
+        </fieldset>
+
+        <!-- Live preview -->
+        <div class="preview-box">
+          <p class="preview-label">Preview</p>
+          <div class="preview-film-row">
+            <span class="preview-film-label">Sample film:</span>
+            <input type="text" id="preview-title" class="preview-title-input" value="The Godfather" />
+            <input type="text" id="preview-year" class="preview-year-input" value="1972" />
+          </div>
+          <a id="preview-url" class="preview-url" href="#" target="_blank" rel="noopener">—</a>
+        </div>
+
+        <div class="wizard-actions">
+          <button type="submit" class="btn btn-primary" id="btn-save">Save</button>
+          <button type="button" class="btn btn-ghost" id="btn-cancel">Cancel</button>
+        </div>
+
+        <p id="wizard-error" class="form-error" hidden></p>
+      </form>
+    </section>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

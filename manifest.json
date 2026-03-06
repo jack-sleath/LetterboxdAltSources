@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Letterboxd Alternative Sources",
+  "version": "1.0.0",
+  "description": "Add configurable alternative streaming and search sources to Letterboxd film pages.",
+
+  "permissions": ["storage"],
+  "host_permissions": ["https://letterboxd.com/*"],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://letterboxd.com/film/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "action": {
+    "default_title": "Letterboxd Alternative Sources"
+  }
+}

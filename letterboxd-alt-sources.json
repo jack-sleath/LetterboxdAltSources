@@ -1,0 +1,26 @@
+{
+  "sources": [
+    {
+      "addYear": true,
+      "baseUrl": "https://www.fmovies.gd/search?q=",
+      "encodeUrlParams": true,
+      "iconUrl": "https://www.fmovies.gd/assets/icon/favicon.ico",
+      "id": "mmf6mxpxsvopnstqzeo",
+      "name": "fmovies",
+      "punctuationToSpaces": false,
+      "removePunctuation": false,
+      "spacesToPlus": false
+    },
+    {
+      "addYear": true,
+      "baseUrl": "https://xprime.today/search?query=",
+      "encodeUrlParams": true,
+      "iconUrl": "https://xprime.today/favicon/favicon-xmas.ico",
+      "id": "mmf6spx0o9ar83zkc5r",
+      "name": "xprime",
+      "punctuationToSpaces": false,
+      "removePunctuation": false,
+      "spacesToPlus": false
+    }
+  ]
+}
