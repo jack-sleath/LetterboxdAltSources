@@ -1,83 +1,96 @@
 # Letterboxd Alternative Sources
 
-A Chrome extension (Manifest V3) that injects configurable alternative streaming/search source links onto Letterboxd film pages, directly above the existing "Stream" section.
+A Chrome extension that adds configurable alternative streaming/search links to Letterboxd film pages, appearing directly above the existing "Stream" section.
 
-## Features
+## What it does
 
-- Adds an **Alternative** section above the Stream panel on any `letterboxd.com/film/*` page
-- Configurable sources with per-source options:
-  - `encodeUrlParams` — applies `encodeURIComponent` to the query
-  - `spacesToPlus` — replaces spaces with `+`
-  - `addYear` — appends the film's release year to the query
-  - Optional icon/favicon URL per source
-- Live URL preview in the settings wizard
-- Handles Letterboxd's SPA navigation (pjax) and the dynamically loaded availability modal (colorbox)
+When you visit a film page on Letterboxd (e.g. `letterboxd.com/film/the-godfather/`), the extension injects an **Alternative** section with links to whatever sources you configure — search engines, streaming sites, download sites, or anything else with a search URL.
 
-## File Structure
+---
+
+## Installation
+
+Since this extension isn't on the Chrome Web Store, you load it directly from the downloaded folder. This is called loading an "unpacked" extension.
+
+### Step 1 — Download the extension files
+
+[Download this repository](https://github.com/jack-sleath/LetterboxdAltSources/archive/refs/heads/main.zip) and unzip it somewhere you won't accidentally delete it (e.g. your Documents folder).
+
+### Step 2 — Open Chrome's extension page
+
+In Chrome, go to:
 
 ```
-LetterboxdAltSources/
-├── manifest.json          # MV3 extension manifest
-├── background.js          # Service worker (initialises default storage)
-├── content.js             # DOM injection + MutationObserver logic
-├── content.css            # Injected styles (Letterboxd dark theme)
-├── icons/
-│   ├── icon16.png         # Add 16×16 PNG
-│   ├── icon48.png         # Add 48×48 PNG
-│   └── icon128.png        # Add 128×128 PNG
-└── options/
-    ├── options.html       # Settings page
-    ├── options.js         # Settings logic (CRUD for sources)
-    └── options.css        # Settings styles
+chrome://extensions
 ```
 
-## Installation (Development)
+Or open the menu (⋮) → **Extensions** → **Manage Extensions**.
 
-1. Open `chrome://extensions`
-2. Enable **Developer mode** (top-right toggle)
-3. Click **Load unpacked**
-4. Select this directory
-5. Open the extension settings via the puzzle-piece menu → **Letterboxd Alternative Sources** → **Options**
+### Step 3 — Enable Developer Mode
 
-## Icons
+In the top-right corner of the extensions page, toggle on **Developer mode**.
 
-Place 16×16, 48×48, and 128×128 PNG files in the `icons/` directory. The extension will load without them but will show a generic icon in the toolbar.
+### Step 4 — Load the extension
 
-## Storage Schema
+Click **Load unpacked**, then navigate to and select the folder you unzipped in Step 1 (the one containing `manifest.json`). Click **Select Folder**.
 
-Sources are saved to `chrome.storage.local` as:
+The extension will appear in your list. You're installed!
 
-```json
-{
-  "sources": [
-    {
-      "id": "abc123",
-      "name": "JustWatch",
-      "baseUrl": "https://www.justwatch.com/us/search?q=",
-      "encodeUrlParams": true,
-      "spacesToPlus": false,
-      "addYear": false,
-      "iconUrl": "https://www.justwatch.com/favicon.ico"
-    }
-  ]
-}
+### Step 5 — Open the Options page
+
+Click the puzzle-piece icon (🧩) in the Chrome toolbar, find **Letterboxd Alternative Sources**, and click the three-dot menu → **Options**. This opens the settings page where you manage your sources.
+
+---
+
+## Adding a source
+
+In the Options page, click **+ Add Source** to open the source wizard.
+
+### Fields
+
+**Display Name** *(required)*
+The label shown on Letterboxd next to the link. For example: `JustWatch` or `Google`.
+
+**Base Search URL** *(required)*
+The URL of the site's search page, including everything up to and including the query parameter. The film title will be appended directly after this.
+
+For example, if searching Google for "The Godfather" gives you:
+```
+https://www.google.com/search?q=The+Godfather
+```
+Then your Base Search URL is:
+```
+https://www.google.com/search?q=
 ```
 
-## Packaging for Distribution
+**Icon URL** *(optional)*
+A URL to a small image (usually the site's favicon) shown next to the link. Most sites have one at `/favicon.ico`, e.g. `https://www.google.com/favicon.ico`. Leave blank if you don't want an icon.
 
-```bash
-# Zip only the required files (exclude .git, node_modules, etc.)
-zip -r letterboxd-alt-sources.zip \
-  manifest.json background.js content.js content.css \
-  options/ icons/
-```
+### Query Options
 
-Then upload to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole).
+These control how the film title is formatted before being added to the URL.
 
-## Notes on Letterboxd DOM
+| Option | What it does |
+|---|---|
+| **Encode URL params** | Applies standard URL-encoding to the title (e.g. spaces become `%20`). Turn this on for most sites. |
+| **Replace spaces with +** | Replaces spaces with `+` instead of `%20`. Some older-style search URLs prefer this. |
+| **Append year** | Adds the film's release year to the search query (e.g. `The Godfather 1972`). Useful for disambiguation. |
+| **Remove punctuation** | Strips punctuation from the title — e.g. `Hail, Caesar!` becomes `Hail Caesar`. Helpful if a site doesn't handle punctuation well. |
+| **Punctuation to spaces** | Replaces punctuation characters with spaces — e.g. `M*A*S*H` becomes `M A S H`. |
 
-- **Film title**: `.headline-1 .name`
-- **Release year**: `.releasedate a`
-- **Stream section**: searched by heading text content (`/^stream$/i`) — if Letterboxd ever changes class names the text-based fallback should still work
-- The availability panel can be loaded both inline in the sidebar and inside a **colorbox** modal overlay; both are handled via `MutationObserver`
-- SPA navigation is detected by observing URL changes via `MutationObserver` and listening for the `page:load` event
+> **Tip:** The **Preview** box at the bottom of the wizard shows you exactly what the final URL will look like as you adjust settings. You can edit the sample film title and year to test with a specific film.
+
+Click **Save** when you're done.
+
+---
+
+## Importing the example sources
+
+This repo includes a file called `letterboxd-alt-sources.json` with a couple of ready-made sources to get you started.
+
+1. Open the Options page (see Step 5 above)
+2. Click the **Import** button
+3. Navigate to the folder from Step 1 and select `letterboxd-alt-sources.json`
+4. Your sources will be added immediately
+
+You can also **Export** your sources at any time to save a backup or share them.
