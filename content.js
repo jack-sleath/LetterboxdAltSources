@@ -54,7 +54,9 @@ function getFilmYear() {
 }
 
 /**
- * Finds the "Stream" section heading inside a given root element.
+ * Finds the first watch-option section heading (Stream, Rent, or Buy) inside
+ * a given root element, so the alt sources section is injected even when only
+ * buy/rent options are available.
  * Letterboxd renders the watch panel both inline on the page and inside a
  * colorbox modal — so we accept an optional root to narrow the search.
  *
@@ -62,15 +64,17 @@ function getFilmYear() {
  * @returns {Element|null}
  */
 function findStreamSection(root = document) {
+  const sectionPattern = /^(stream|rent|buy)$/i;
+
   // Real selector confirmed from DOM: h3.type inside .justwatch-strip
   const candidates = root.querySelectorAll('.justwatch-strip h3.type');
   for (const el of candidates) {
-    if (/^stream$/i.test(el.textContent.trim())) return el;
+    if (sectionPattern.test(el.textContent.trim())) return el;
   }
 
-  // Fallback: any h3 whose trimmed text is exactly "Stream"
+  // Fallback: any h3 whose trimmed text is exactly "Stream", "Rent", or "Buy"
   for (const el of root.querySelectorAll('h3')) {
-    if (/^stream$/i.test(el.textContent.trim())) return el;
+    if (sectionPattern.test(el.textContent.trim())) return el;
   }
 
   return null;
