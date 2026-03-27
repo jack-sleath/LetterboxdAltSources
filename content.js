@@ -108,11 +108,23 @@ function injectSection(sources, title, year, searchRoot = document) {
     return;
   }
 
-  const streamHeading = findStreamSection(searchRoot);
-  if (!streamHeading) return;
+  let parentEl, insertBeforeEl;
 
-  const container = getSectionContainer(streamHeading);
-  if (!container || !container.parentElement) return;
+  const streamHeading = findStreamSection(searchRoot);
+  if (streamHeading) {
+    const container = getSectionContainer(streamHeading);
+    if (!container || !container.parentElement) return;
+    parentEl = container.parentElement;
+    insertBeforeEl = container;
+  } else {
+    // No JustWatch section — find a fallback container so alt sources still appear
+    const fallback = searchRoot.querySelector(
+      '#film-sidebar, [data-film-id] aside, .film-details, .col-main'
+    );
+    if (!fallback) return;
+    parentEl = fallback;
+    insertBeforeEl = fallback.firstElementChild || null;
+  }
 
   // Use Letterboxd's own classes so the section inherits the page's styles
   const section = document.createElement('div');
@@ -178,7 +190,11 @@ function injectSection(sources, title, year, searchRoot = document) {
   }
 
   section.appendChild(servicesDiv);
-  container.parentElement.insertBefore(section, container);
+  if (insertBeforeEl) {
+    parentEl.insertBefore(section, insertBeforeEl);
+  } else {
+    parentEl.appendChild(section);
+  }
 }
 
 /**
