@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!--
+    Letterboxd Alternative Sources — icon
+    Three-circle Venn diagram in the Letterboxd palette: orange top, blue left,
+    green right. Every overlap is white, drawn as one circle clipped by another.
+    Circle radius 124, centre spacing 180 (a wider spacing than the classic
+    Venn, so the white overlaps stay as three petals plus a small centre).
+    Background: rounded square #14181c — set rx="0" for a full-bleed square.
+  -->
+  <defs>
+    <clipPath id="clip-top"><circle cx="256" cy="178.1" r="124"/></clipPath>
+    <clipPath id="clip-left"><circle cx="166" cy="334.0" r="124"/></clipPath>
+  </defs>
+
+  <rect width="512" height="512" rx="96" fill="#14181c"/>
+
+  <!-- The three circles -->
+  <circle cx="256" cy="178.1" r="124" fill="#ff8000"/>
+  <circle cx="166" cy="334.0" r="124" fill="#40bcf4"/>
+  <circle cx="346" cy="334.0" r="124" fill="#00e054"/>
+
+  <!-- Overlaps in white: top∩left, top∩right, left∩right (centre is covered by all three) -->
+  <circle cx="166" cy="334.0" r="124" fill="#ffffff" clip-path="url(#clip-top)"/>
+  <circle cx="346" cy="334.0" r="124" fill="#ffffff" clip-path="url(#clip-top)"/>
+  <circle cx="346" cy="334.0" r="124" fill="#ffffff" clip-path="url(#clip-left)"/>
+</svg>
