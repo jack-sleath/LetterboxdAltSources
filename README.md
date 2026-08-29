@@ -14,7 +14,7 @@ Since this extension isn't on the Chrome Web Store, you load it directly from th
 
 ### Step 1 — Download the extension files
 
-[Download this repository](https://github.com/jack-sleath/LetterboxdAltSources/archive/refs/heads/main.zip) and unzip it somewhere you won't accidentally delete it (e.g. your Documents folder).
+[Download this repository](https://github.com/jack-sleath/letterboxd-alt-sources/archive/refs/heads/main.zip) and unzip it somewhere you won't accidentally delete it (e.g. your Documents folder).
 
 ### Step 2 — Open Chrome's extension page
 
