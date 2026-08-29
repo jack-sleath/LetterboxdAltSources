@@ -1,5 +1,6 @@
 // Background service worker — initialises default storage on first install and
-// opens the options page on request from the content script.
+// opens the options page when asked (toolbar icon click, or a request from the
+// content script).
 
 // Seeded on first install so the extension does something out of the box, and
 // so there's a worked example to copy when adding your own sources.
@@ -30,4 +31,10 @@ chrome.runtime.onMessage.addListener((message) => {
   if (message?.type === 'open_options') {
     chrome.runtime.openOptionsPage();
   }
+});
+
+// There's no popup — the whole UI lives in the options page — so clicking the
+// toolbar icon takes you straight there.
+chrome.action.onClicked.addListener(() => {
+  chrome.runtime.openOptionsPage();
 });

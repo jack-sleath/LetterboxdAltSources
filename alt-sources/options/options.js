@@ -34,6 +34,20 @@ function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
+/**
+ * True only for well-formed http(s) URLs. Source URLs end up as hrefs / img
+ * srcs injected into letterboxd.com, so other schemes (javascript:, data:,
+ * file:) are rejected both in the wizard and on import.
+ */
+function isHttpUrl(value) {
+  try {
+    const { protocol } = new URL(value);
+    return protocol === 'http:' || protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 function loadSources() {
   return new Promise((resolve) =>
     chrome.storage.local.get('sources', ({ sources }) => resolve(sources || []))
@@ -75,7 +89,7 @@ const wizardError = document.getElementById('wizard-error');
 // ---------------------------------------------------------------------------
 
 function renderSources(sources) {
-  sourceList.innerHTML = '';
+  sourceList.replaceChildren();
 
   if (sources.length === 0) {
     emptyMessage.hidden = false;
@@ -259,16 +273,12 @@ wizardForm.addEventListener('submit', async (e) => {
 
   const name = fieldName.value.trim();
   const baseUrl = fieldBaseUrl.value.trim();
+  const iconUrl = fieldIconUrl.value.trim();
 
   if (!name) return showError('Display name is required.');
   if (!baseUrl) return showError('Base URL is required.');
-
-  // Basic URL sanity check
-  try {
-    new URL(baseUrl);
-  } catch {
-    return showError('Base URL does not appear to be a valid URL.');
-  }
+  if (!isHttpUrl(baseUrl)) return showError('Base URL must be a valid http:// or https:// URL.');
+  if (iconUrl && !isHttpUrl(iconUrl)) return showError('Icon URL must be a valid http:// or https:// URL.');
 
   const sources = await loadSources();
   const id = editIdInput.value || generateId();
@@ -277,7 +287,7 @@ wizardForm.addEventListener('submit', async (e) => {
     id,
     name,
     baseUrl,
-    iconUrl: fieldIconUrl.value.trim(),
+    iconUrl,
     extraText: fieldExtraText.value.trim(),
     encodeUrlParams: optEncode.checked,
     spacesToPlus: optSpacesToPlus.checked,
@@ -327,9 +337,27 @@ function importSources(file) {
       return alert('JSON must have a "sources" array at the top level.');
     }
 
-    const incoming = parsed.sources.filter(
-      (s) => s && typeof s.name === 'string' && typeof s.baseUrl === 'string'
-    ).map((s) => ({ ...s, id: s.id || generateId() }));
+    // Only keep entries with a name and an http(s) base URL, and rebuild each
+    // one from known fields so stray keys in the file don't end up in storage.
+    const incoming = parsed.sources
+      .filter((s) =>
+        s &&
+        typeof s.name === 'string' && s.name.trim() &&
+        typeof s.baseUrl === 'string' && isHttpUrl(s.baseUrl.trim())
+      )
+      .map((s) => ({
+        id: typeof s.id === 'string' && s.id ? s.id : generateId(),
+        name: s.name.trim(),
+        baseUrl: s.baseUrl.trim(),
+        iconUrl: typeof s.iconUrl === 'string' && isHttpUrl(s.iconUrl.trim()) ? s.iconUrl.trim() : '',
+        extraText: typeof s.extraText === 'string' ? s.extraText.trim() : '',
+        encodeUrlParams: Boolean(s.encodeUrlParams),
+        spacesToPlus: Boolean(s.spacesToPlus),
+        addYear: Boolean(s.addYear),
+        removePunctuation: Boolean(s.removePunctuation),
+        punctuationToSpaces: Boolean(s.punctuationToSpaces),
+      }));
+    const skipped = parsed.sources.length - incoming.length;
 
     if (incoming.length === 0) {
       return alert('No valid sources found in the file.');
@@ -344,7 +372,10 @@ function importSources(file) {
 
     await saveSources(merged);
     renderSources(await loadSources());
-    alert(`Imported ${incoming.length} source(s).`);
+    alert(
+      `Imported ${incoming.length} source(s).` +
+      (skipped > 0 ? ` Skipped ${skipped} invalid entr${skipped === 1 ? 'y' : 'ies'}.` : '')
+    );
   };
   reader.readAsText(file);
 }

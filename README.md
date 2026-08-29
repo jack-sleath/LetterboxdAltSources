@@ -38,7 +38,7 @@ The extension will appear in your list. You're installed!
 
 ### Step 5 — Open the Options page
 
-Click the puzzle-piece icon (🧩) in the Chrome toolbar, find **Letterboxd Alternative Sources**, and click the three-dot menu → **Options**. This opens the settings page where you manage your sources.
+Click the extension's icon in the Chrome toolbar — it opens the settings page directly. If the icon isn't pinned, click the puzzle-piece icon (🧩), find **Letterboxd Alternative Sources**, and either click it or use the three-dot menu → **Options**. This is where you manage your sources.
 
 A **YouTube** source is set up for you on install, so there's something to see straight away: it searches YouTube for the film title, year and the words "full movie" — e.g. `The Godfather 1972 full movie`. Edit or delete it like any other source.
 

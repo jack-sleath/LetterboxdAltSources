@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Letterboxd Alternative Sources",
-  "version": "26.8.19.1136",
+  "version": "26.8.29.1159",
   "description": "Add configurable alternative streaming and search sources to Letterboxd film pages.",
 
   "icons": {
@@ -12,7 +12,6 @@
   },
 
   "permissions": ["storage"],
-  "host_permissions": ["https://letterboxd.com/*"],
 
   "background": {
     "service_worker": "background.js"
